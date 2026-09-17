@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21 # Recommended for AGP 9.0+ and SDK 36
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
@@ -23,19 +23,20 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-          # Updated to SDK 36 to match your project's targetSdk
           packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
 
-      - name: Create dummy .env file
-        # The Secrets Gradle Plugin in your build.gradle requires this file to exist
+      # NEW: Install Gradle manually since gradlew is missing
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.10.2 # Compatible with AGP 9.1 and SDK 36
+
+      - name: Create dummy .env
         run: echo "GEMINI_API_KEY=dummy_key" > .env
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
       - name: Build Debug APK
-        # Using --no-daemon is better for CI environments
-        run: ./gradlew assembleDebug --stacktrace --no-daemon
+        # Use 'gradle' instead of './gradlew'
+        run: gradle assembleDebug --stacktrace --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

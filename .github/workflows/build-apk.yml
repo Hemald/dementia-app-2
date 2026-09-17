@@ -23,17 +23,20 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-          # Targets SDK 36 as defined in your build.gradle
           packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          # UPDATED: Matches the requirement for AGP 9.1.1
           gradle-version: 9.3.1 
 
       - name: Create dummy .env
         run: echo "GEMINI_API_KEY=dummy_key" > .env
+
+      # NEW: Generate the missing debug.keystore file required by your build.gradle
+      - name: Generate Debug Keystore
+        run: |
+          keytool -genkey -v -keystore debug.keystore -alias androiddebugkey -storepass android -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
 
       - name: Build Debug APK
         run: gradle assembleDebug --stacktrace --no-daemon

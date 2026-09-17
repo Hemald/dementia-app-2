@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AppFunctionAppMetadata xmlns:appfn="http://schemas.android.com/apk/androidx.appfunctions"
+    appfn:description="Cognitive Assistant: Helps users with memory, reaction, and hydration routine workflows."
+    appfn:displayDescription="@string/app_name" />

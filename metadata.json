@@ -1,0 +1,6 @@
+{
+  "name": "Cognitive Assistant",
+  "description": "Adaptive cognitive support featuring daily hydration tracking, cognitive practice routines, family photo memory exploration, and an interactive metaphorical memory map.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
